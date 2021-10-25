@@ -1,0 +1,34 @@
+HELP.md
+target/
+
+
+/**/target/
+/temp/
+/LOG_PATH_IS_UNDEFINED/
+# STS
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+# IntelliJ IDEA
+/**/*.idea
+/**/*.iml
+*.iws
+*.ipr
+*.iml
+*.mvn/
+mvnw
+*.cmd
+/.idea/
+/.project
+
+
+# Compiled class file
+*.class
+
+# Log file
+*.log
