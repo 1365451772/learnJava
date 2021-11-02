@@ -1,6 +1,5 @@
 package me.sunpeng;
 
-import me.sunpneg.StartAppliction9000;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

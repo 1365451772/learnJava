@@ -1,5 +1,7 @@
-package me.sunpneg.controller;
+package me.sunpeng.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,10 +11,13 @@ import java.util.concurrent.*;
  * @author sp
  * @date 2021-10-25 10:38
  */
+
 @RestController
+@Api(tags = "hello 欢迎界面")
 public class HelloController {
 
     @GetMapping("/test")
+    @ApiOperation(value = "测试", notes = "测试a")
     public String hello() throws InterruptedException {
         final ThreadPoolExecutor threadPoolExecutor = new ThreadPoolExecutor(10,
                 30,
