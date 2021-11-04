@@ -27,7 +27,7 @@
         <spring.web.version>5.3.9</spring.web.version>
         <excel.poi.version>3.17</excel.poi.version>
         <excel.poi-ooxml.version>3.17</excel.poi-ooxml.version>
-        <excel.xercesImpl.version>2.12.o</excel.xercesImpl.version>
+        <excel.xercesImpl.version>2.12.0</excel.xercesImpl.version>
         <geronimo.servlet.version>1.1.1</geronimo.servlet.version>
         <slf4j.api.version>1.6.1</slf4j.api.version>
         <springfox.swagger2.version>2.9.2</springfox.swagger2.version>
@@ -64,13 +64,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!--spring web-->
             <dependency>
                 <groupId>org.springframework</groupId>
                 <artifactId>spring-web</artifactId>
                 <version>${spring.web.version}</version>
             </dependency>
-
-
+            <!--数据库-->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
@@ -132,7 +132,7 @@
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
-                <version>${excel.poi}</version>
+                <version>${excel.poi.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.apache.poi</groupId>
@@ -143,13 +143,6 @@
                 <groupId>xerces</groupId>
                 <artifactId>xercesImpl</artifactId>
                 <version>${excel.xercesImpl.version}</version>
-            </dependency>
-
-            <!--lombok-->
-            <dependency>
-                <groupId>org.projectlombok</groupId>
-                <artifactId>lombok</artifactId>
-                <version>${lombok.version}</version>
             </dependency>
 
             <dependency>
@@ -164,6 +157,12 @@
                 <groupId>cn.hutool</groupId>
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool.version}</version>
+            </dependency>
+
+            <!--servlet api-->
+            <dependency>
+                <groupId>org.apache.geronimo.specs</groupId>
+                <artifactId>${geronimo.servlet.version}</artifactId>
             </dependency>
         </dependencies>
 
@@ -220,6 +219,7 @@
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>2.2.2.RELEASE</version>
                     <executions>
                         <execution>
                             <goals>
