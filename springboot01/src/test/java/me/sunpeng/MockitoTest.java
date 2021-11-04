@@ -23,6 +23,8 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(classes = StartAppliction9000.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MockitoTest {
 
+
+
     @Test
     public void Test01() {
         //模拟创建一个List对象
