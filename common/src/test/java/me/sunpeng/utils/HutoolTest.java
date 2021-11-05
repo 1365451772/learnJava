@@ -3,17 +3,28 @@ package me.sunpeng.utils;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.date.DateUtil;
 import cn.hutool.core.io.IoUtil;
+import cn.hutool.core.io.StreamProgress;
 import cn.hutool.core.io.file.FileReader;
 import cn.hutool.core.io.file.FileWriter;
 import cn.hutool.core.io.resource.ResourceUtil;
+import cn.hutool.core.util.CharsetUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.ZipUtil;
+import cn.hutool.cron.CronUtil;
+import cn.hutool.cron.task.Task;
+import cn.hutool.extra.qrcode.QrCodeUtil;
+import cn.hutool.extra.qrcode.QrConfig;
+import cn.hutool.http.HttpUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import cn.hutool.setting.dialect.Props;
+import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import org.junit.Test;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -165,15 +176,164 @@ public class HutoolTest {
         System.out.println(file.getName());//运行结果：abc.zip
     }
 
-    public void testZipUtils4(){
+    public void testZipUtils4() {
         //将/Users/sunpeng/Desktop/dist.zip 解压到 dist2 目录下，返回值是解压的目录
         final File unzip = ZipUtil.unzip("/Users/sunpeng/Desktop/dist.zip", "/Users/sunpeng/Desktop/dist2");
         System.out.println(unzip.getName());
 
+    }
+
+    @Test
+    public void testJsonUtil() {
+        //xml 转 Json
+        String xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n" +
+                "<DayFlowInfoQryReq>\n" +
+                "    <IDType>12</IDType>\n" +
+                "    <IDItemRange>13567895432</IDItemRange>\n" +
+                "    <BizType>01</BizType>\n" +
+                "    <POCont>\n" +
+                "        <BooleanTest>true</BooleanTest>\n" +
+                "        <OprTime>20210103161025</OprTime>\n" +
+                "    </POCont>\n" +
+                "    <IdentCode>3240ad5b9b43a</IdentCode>\n" +
+                "</DayFlowInfoQryReq>";
+        System.out.println(JSONUtil.xmlToJson(xml).toStringPretty());
+    }
+
+    @Test
+    public void testJsonUtil2() {
+        //json 转xml
+        String jsonStr = "{\n" +
+                "    \"DayFlowInfoQryReq\": {\n" +
+                "        \"IDItemRange\": 13567895432,\n" +
+                "        \"BizType\": \"01\",\n" +
+                "        \"POCont\": {\n" +
+                "            \"OprTime\": 20210103161025,\n" +
+                "            \"BooleanTest\": true\n" +
+                "        },\n" +
+                "        \"IDType\": 12,\n" +
+                "        \"IdentCode\": \"3240ad5b9b43a\"\n" +
+                "    }\n" +
+                "}";
+        String xmlStr = JSONUtil.toXmlStr(new JSONObject(jsonStr));
+        System.out.println(xmlStr);
+
+    }
+
+    @Test
+    public void testJsonUtil3() {
+        //从文件里读取json或者json数组
+        final File file = new File("/a.json");
+        System.out.println(JSONUtil.readJSONObject(file, Charset.forName("UTF-8")));
+    }
+
+    @Test
+    public void testHttpUtil() {
+        String requestUrl = "http://learning.happymmall.com/centos.html";
+        //最简单单位HTTP请求，可以自动通过header等信息判断编码,不区分HTTP和HTTPS
+        System.out.println(HttpUtil.get(requestUrl));
+        System.out.println("****");
+        //当无法识别页面编码时候，可以自定义请求页面的编码
+        System.out.println(HttpUtil.get(requestUrl, CharsetUtil.CHARSET_UTF_8));
+
+        //单独传入http参数，参数自动做URL编码，拼接在URL中
+        HashMap<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("city", "北京");
+        requestUrl = "https://www.baidu.com";
+        System.out.println(HttpUtil.get(requestUrl, paramMap));
+
+    }
+
+    @Test
+    public void testHttpUtil1() {
+        //发送请求体body到对应地址(可以是xml格式或者json格式的字符串，也可以是a=1&b=2这种格式的字符串)
+        String result1 = HttpUtil.post("https://www.baidu.com", "{\"name\":\"123\",\"type\":\"abc\"}");
+        System.out.println(result1);
+
+        //发送post表单数据到对应地址
+        HashMap<String, Object> paramMap = new HashMap<String, Object>();
+        paramMap.put("name", "123");
+        paramMap.put("type", "abc");
+        String result2 = HttpUtil.post("https://www.baidu.com", paramMap);
+        System.out.println(result2);
+
+    }
+
+    @Test
+    public void testhttpUtil3() {
+        //url 请求下载文件
+        String fileUrl = "http://learning.happymmall.com/nginx/linux-nginx-1.10.2.tar.gz";
+        String deskTopPath = "//Users/sunpeng/Desktop";
+
+        StreamProgress streamProgress = new StreamProgress() {
+            @Override
+            public void start() {
+                System.out.println("开始");
+            }
+
+            @Override
+            public void progress(long l) {
+                System.out.println("******  " + l + "   ******");
+            }
+
+            @Override
+            public void finish() {
+                System.out.println("结束");
+            }
+        };
+        final long szie = HttpUtil.downloadFile(fileUrl, new File(deskTopPath), streamProgress);
+        System.out.println("size: " + szie);
+        final String strSize = FileUtil.readableFileSize(szie);
+        System.out.println("readableFileSize: " + strSize);
 
 
     }
 
+
+    @Test
+    public void testScheduled() {
+        //表示支持秒级别的定时任务
+        CronUtil.setMatchSecond(true);
+        final int[] i = {0};
+        CronUtil.schedule("* * * * * ?", (Task) HutoolTest::run);
+        CronUtil.start();
+    }
+
+
+    public static int i = 1;
+
+    public static void run() {
+        System.out.println("测试执行情况--->" + (i++));
+        if (i > 10) {
+            CronUtil.stop();
+        }
+    }
+
+    @Test
+    public void testQrCodeUtil() {
+        //生成指定url对应的二维码到文件，宽和高都是300 像素
+        final File file = FileUtil.file("/Users/sunpeng/Desktop/QrCode.jpg");
+        QrCodeUtil.generate("https://www.bilibili.com/", 300, 300, file);
+    }
+
+    @Test
+    public void testtestQrCodeUtil1() {
+        /*  很多时候，二维码无法识别，这时就要调整纠错级别。
+           纠错级别使用zxing的ErrorCorrectionLevel枚举封装，包括：L、M、Q、H几个参数，由低到高。低级别的像素块更大，
+           可以远距离识别，但是遮挡就会造成无法识别。高级别则相反，像素块小，允许遮挡一定范围，但是像素块更密集*/
+        QrConfig config = new QrConfig();
+        //高纠错级别
+        config.setErrorCorrection(ErrorCorrectionLevel.H);
+        File file = FileUtil.file("/Users/sunpeng/Desktop/QrCode.jpg");
+        QrCodeUtil.generate("https://www.bilibili.com/", config, file);
+
+    }
+
+    @Test
+    public void testtestQrCodeUtil2(){
+        String result = QrCodeUtil.decode(FileUtil.file("/Users/sunpeng/Desktop/QrCode.jpg"));
+        System.out.println(result);//运行结果：https://www.bilibili.com/
+    }
 
 
 }

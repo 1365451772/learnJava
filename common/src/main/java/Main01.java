@@ -6,7 +6,7 @@ import me.sunpeng.utils.TranslationUtil;
  * @author sp
  * @date 2021-11-04 20:51
  */
-public class Main {
+public class Main01 {
 
     public static void main(String[] args) {
         TranslationUtil translationUtil=new TranslationUtil();
