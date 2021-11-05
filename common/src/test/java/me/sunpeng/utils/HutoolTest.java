@@ -21,6 +21,7 @@ import cn.hutool.setting.dialect.Props;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
 import org.junit.Test;
 
+import java.awt.*;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.Date;
@@ -333,6 +334,34 @@ public class HutoolTest {
     public void testtestQrCodeUtil2(){
         String result = QrCodeUtil.decode(FileUtil.file("/Users/sunpeng/Desktop/QrCode.jpg"));
         System.out.println(result);//运行结果：https://www.bilibili.com/
+    }
+
+    @Test
+    public void testtestQrCodeUtil3(){
+        //设置二维码的宽和高都是300像素
+        QrConfig config = new QrConfig(300, 300);
+        //设置边距，既二维码和背景之间的边距
+        config.setMargin(2);
+        //设置前景色，既二维码颜色
+        config.setForeColor(new Color(0, 255, 255));
+        //设置背景色
+        config.setBackColor(new Color(128, 128, 128));
+        //生成二维码到文件，也可以到流
+        File file = FileUtil.file("/Users/sunpeng/Desktop/QrCode.jpg");
+        QrCodeUtil.generate("https://www.bilibili.com/", config, file);
+
+
+        //设置二维码的宽和高都是300像素
+        QrConfig config2 = new QrConfig(300, 300);
+        //设置边距，既二维码和背景之间的边距
+        config2.setMargin(1);
+        //设置二维码中的logo图片
+        config2.setImg("/Users/sunpeng/Desktop/logo_small.jpg");
+
+        File file2 = FileUtil.file("/Users/sunpeng/Desktop/QrCode2.jpg");
+        QrCodeUtil.generate("https://www.bilibili.com/", config2, file2);
+
+
     }
 
 
