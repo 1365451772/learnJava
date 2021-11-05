@@ -35,6 +35,10 @@
         <swagger-bootstrap-ui.version>1.9.2</swagger-bootstrap-ui.version>
         <jackson.core.asl.vesrion>1.9.13</jackson.core.asl.vesrion>
         <hutool.version>5.3.7</hutool.version>
+        <net.dongliu.requests.vesrsion>5.0.7</net.dongliu.requests.vesrsion>
+        <commons-codec.version>1.9</commons-codec.version>
+        <fastjson.version>1.2.47</fastjson.version>
+
     </properties>
 
     <!-- 子模块继承之后，提供作用：锁定版本+子modlue不用写groupId和version  -->
@@ -164,7 +168,28 @@
                 <groupId>org.apache.geronimo.specs</groupId>
                 <artifactId>${geronimo.servlet.version}</artifactId>
             </dependency>
+
+            <!--java 实现有道翻译爬虫-->
+
+            <dependency>
+                <groupId>net.dongliu</groupId>
+                <artifactId>requests</artifactId>
+                <version>${net.dongliu.requests.vesrsion}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
+            <dependency>
+                <groupId>commons-codec</groupId>
+                <artifactId>commons-codec</artifactId>
+                <version>${commons-codec.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.alibaba</groupId>
+                <artifactId>fastjson</artifactId>
+                <version>${fastjson.version}</version>
+            </dependency>
         </dependencies>
+
+
 
 
     </dependencyManagement>
