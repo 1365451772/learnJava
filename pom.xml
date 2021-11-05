@@ -38,6 +38,7 @@
         <net.dongliu.requests.vesrsion>5.0.7</net.dongliu.requests.vesrsion>
         <commons-codec.version>1.9</commons-codec.version>
         <fastjson.version>1.2.47</fastjson.version>
+        <slf4j-nop.vesrison>1.7.2</slf4j-nop.vesrison>
 
     </properties>
 
@@ -154,6 +155,13 @@
                 <artifactId>slf4j-api</artifactId>
                 <version>${slf4j.api.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.slf4j</groupId>
+                <artifactId>slf4j-nop</artifactId>
+                <version>${slf4j-nop.vesrison}</version>
+            </dependency>
+
+
 
 
             <!--hutool 工具-->

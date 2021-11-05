@@ -13,7 +13,6 @@ import org.junit.Test;
 
 import java.io.*;
 import java.nio.charset.Charset;
-import java.text.DecimalFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -22,19 +21,6 @@ import java.util.List;
  * @date 2021-11-04 10:47
  */
 public class HutoolTest {
-
-
-    private static final int GB = 1024 * 1024 * 1024;
-    /**
-     * 定义MB的计算常量
-     */
-    private static final int MB = 1024 * 1024;
-    /**
-     * 定义KB的计算常量
-     */
-    private static final int KB = 1024;
-
-    private static final DecimalFormat DF = new DecimalFormat("0.00");
 
 
     /*
@@ -106,7 +92,7 @@ public class HutoolTest {
         final BufferedOutputStream outputStream = FileUtil.getOutputStream(DeskTopPath + "hutool.zip");
         //使用copy方法进行文件拷贝时，也是可以指定缓存区大小的，比如IoUtil.copy(in,out,1024)就是指缓存区的大小是1024，不指定的话默认是8192
         final long copySize = IoUtil.copy(inputStream, outputStream);
-        System.out.println(getSize(copySize));
+        System.out.println(FileUtil.getSize(copySize));
 
     }
 
@@ -188,22 +174,6 @@ public class HutoolTest {
 
     }
 
-    public String getSize(long size) {
-        String resultSize;
-        if (size / GB >= 1) {
-            //如果当前Byte的值大于等于1GB
-            resultSize = DF.format(size / (float) GB) + "GB   ";
-        } else if (size / MB >= 1) {
-            //如果当前Byte的值大于等于1MB
-            resultSize = DF.format(size / (float) MB) + "MB   ";
-        } else if (size / KB >= 1) {
-            //如果当前Byte的值大于等于1KB
-            resultSize = DF.format(size / (float) KB) + "KB   ";
-        } else {
-            resultSize = size + "B   ";
-        }
-        return resultSize;
-    }
 
 
 }
