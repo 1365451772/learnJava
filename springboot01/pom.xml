@@ -65,14 +65,58 @@
             <artifactId>hutool-all</artifactId>
         </dependency>
 
+
+        <!--依赖common模块-->
+        <dependency>
+            <groupId>org.example</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
         <plugins>
+            <!--因为项目中使用的SpringBoot，SpringBoot也提供了一种打包方式：spring-boot-maven-plugin，
+            这种方式打包时会将该项目中所有依赖的包（包括静态文件）统一打包至一个jar中，这个不是我们项目的需求，
+            我们的需求是将所有的jar包（包括第三方及当前项目的jar包）都放在lib目录，且是单独存在。
+                因此需要将其他模块的打包配置修改，修改分为两步：
+                1）不再使用spring-boot-maven-plugin进行打包，即将其从pom.xml中删除；
+                 2）在pom.xml文件中使用maven-jar-plugin进行打包，-->
+<!--            <plugin>-->
+<!--                <groupId>org.springframework.boot</groupId>-->
+<!--                <artifactId>spring-boot-maven-plugin</artifactId>-->
+<!--            </plugin>-->
+
+            <!--使用Maven-jar插件实现打包自动生成项目可执行jar包-->
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <!--运行jar包时运行的主类，要求类全名-->
+                            <mainClass>me.sunpeng.StartAppliction9000</mainClass>
+                            <!-- 是否指定项目classpath下的依赖 -->
+                            <addClasspath>true</addClasspath>
+                            <!-- 指定依赖的时候声明前缀 -->
+                            <classpathPrefix>./</classpathPrefix>
+                            <!--依赖是否使用带有时间戳的唯一版本号,如:xxx-1.3.0-20121225.012733.jar-->
+                            <useUniqueVersions>false</useUniqueVersions>
+                        </manifest>
+                    </archive>
+                </configuration>
             </plugin>
+            <!--把当前项目所有的依赖打包到target目录下的lib文件夹下-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-assembly-plugin</artifactId>
+            </plugin>
+
         </plugins>
     </build>
 

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<assembly
+        xmlns="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://maven.apache.org/plugins/maven-assembly-plugin/assembly/1.1.2 http://maven.apache.org/xsd/assembly-1.1.2.xsd">
+
+<id>${project.version}</id>
+    <formats>
+        <format>tar.gz</format>
+        <format>jar</format>
+        <format>dir</format>
+    </formats>
+    <!--tar.gz压缩包下是否生成和项目名相同的根目录-->
+    <includeBaseDirectory>true</includeBaseDirectory>
+    <dependencySets>
+        <dependencySet>
+            <!--是否把本项目添加到依赖文件夹下-->
+            <useProjectArtifact>true</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <!--将scope为runtime的依赖包打包-->
+            <scope>runtime</scope>
+            <!--指定最后生成依赖的名称格式，解决snapshot版本依赖引用不到的问题-->
+            <outputFileNameMapping>${artifact.artifactId}-${artifact.baseVersion}.${artifact.extension}</outputFileNameMapping>
+        </dependencySet>
+
+        <dependencySet>
+            <unpack>false</unpack>
+            <useProjectArtifact>true</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <scope>provided</scope>
+        </dependencySet>
+        <dependencySet>
+            <unpack>false</unpack>
+            <useProjectArtifact>true</useProjectArtifact>
+            <outputDirectory>lib</outputDirectory>
+            <scope>system</scope>
+        </dependencySet>
+    </dependencySets>
+
+<!--    <files>-->
+<!--        <file>-->
+<!--            <source>build/build.json</source>-->
+<!--            <outputDirectory></outputDirectory>-->
+<!--            <filtered>true</filtered>-->
+<!--        </file>-->
+<!--        <file>-->
+<!--            <source>build/pom.properties</source>-->
+<!--            <outputDirectory></outputDirectory>-->
+<!--            <filtered>true</filtered>-->
+<!--        </file>-->
+<!--    </files>-->
+    <fileSets>
+        <fileSet>
+            <directory>bin</directory>
+            <outputDirectory>/</outputDirectory>
+        </fileSet>
+        <fileSet>
+            <directory>src/main/resources/config</directory>
+            <outputDirectory>/config</outputDirectory>
+        </fileSet>
+    </fileSets>
+</assembly>

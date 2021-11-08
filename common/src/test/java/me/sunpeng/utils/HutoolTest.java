@@ -331,13 +331,13 @@ public class HutoolTest {
     }
 
     @Test
-    public void testtestQrCodeUtil2(){
+    public void testtestQrCodeUtil2() {
         String result = QrCodeUtil.decode(FileUtil.file("/Users/sunpeng/Desktop/QrCode.jpg"));
         System.out.println(result);//运行结果：https://www.bilibili.com/
     }
 
     @Test
-    public void testtestQrCodeUtil3(){
+    public void testQrCodeUtil3() {
         //设置二维码的宽和高都是300像素
         QrConfig config = new QrConfig(300, 300);
         //设置边距，既二维码和背景之间的边距
@@ -362,6 +362,18 @@ public class HutoolTest {
         QrCodeUtil.generate("https://www.bilibili.com/", config2, file2);
 
 
+    }
+
+    @Test
+    public void testSwitch() {
+        int a = 1;
+        switch (a) {
+            case 1 | 2:
+                System.out.println(1);
+                break;
+            default:
+                break;
+        }
     }
 
 
