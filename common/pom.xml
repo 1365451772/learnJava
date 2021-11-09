@@ -27,12 +27,18 @@
         <dependency>
             <groupId>com.google.zxing</groupId>
             <artifactId>core</artifactId>
+            <optional>true</optional>
         </dependency>
 
-        <!--spring-web-->
+        <!--spring-web   和springboot 项目spring-boot-starter-web里的spring-web版本统一
+          如果不统一，编译时不报错，但是运行时会报错，多个版本的jar包
+          jvm不知道用哪个jar包，会导致java.lang.NoClassDefFoundError
+        -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
+            <version>5.2.2.RELEASE</version>
+            <optional>true</optional>
         </dependency>
 
 
@@ -66,7 +72,6 @@
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-nop</artifactId>

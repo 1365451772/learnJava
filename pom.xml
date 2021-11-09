@@ -10,6 +10,7 @@
     <modules>
         <module>springboot01</module>
         <module>common</module>
+        <module>springboot02</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -29,11 +30,10 @@
         <excel.poi-ooxml.version>3.17</excel.poi-ooxml.version>
         <excel.xercesImpl.version>2.12.0</excel.xercesImpl.version>
         <geronimo.servlet.version>1.1.1</geronimo.servlet.version>
-        <slf4j.api.version>1.6.1</slf4j.api.version>
+        <slf4j.api.version>1.7.16</slf4j.api.version>
         <springfox.swagger2.version>2.9.2</springfox.swagger2.version>
         <springfox.swagger-ui.version>2.9.2</springfox.swagger-ui.version>
         <swagger-bootstrap-ui.version>1.9.2</swagger-bootstrap-ui.version>
-        <jackson.core.asl.vesrion>1.9.13</jackson.core.asl.vesrion>
         <hutool.version>5.3.7</hutool.version>
         <net.dongliu.requests.vesrsion>5.0.7</net.dongliu.requests.vesrsion>
         <commons-codec.version>1.9</commons-codec.version>
@@ -69,12 +69,6 @@
                 <version>2.1.0.RELEASE</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <!--spring web-->
-            <dependency>
-                <groupId>org.springframework</groupId>
-                <artifactId>spring-web</artifactId>
-                <version>${spring.web.version}</version>
             </dependency>
             <!--数据库-->
             <dependency>
@@ -127,11 +121,6 @@
                 <version>${swagger-bootstrap-ui.version}</version>
             </dependency>
 
-            <dependency>
-                <groupId>org.codehaus.jackson</groupId>
-                <artifactId>jackson-core-asl</artifactId>
-                <version>${jackson.core.asl.vesrion}</version>
-            </dependency>
 
 
             <!-- excel工具 -->
@@ -180,7 +169,8 @@
             <!--servlet api-->
             <dependency>
                 <groupId>org.apache.geronimo.specs</groupId>
-                <artifactId>${geronimo.servlet.version}</artifactId>
+                <artifactId>geronimo-servlet_2.4_spec</artifactId>
+                <version>${geronimo.servlet.version}</version>
             </dependency>
 
             <!--java 实现有道翻译爬虫-->
@@ -339,4 +329,30 @@
             </plugin>
         </plugins>
     </build>
+
+
+    <repositories>
+        <repository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
+
+    <pluginRepositories>
+        <pluginRepository>
+            <id>public</id>
+            <name>aliyun nexus</name>
+            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
+    </pluginRepositories>
 </project>
