@@ -3,7 +3,7 @@ server:
 
 spring:
   application:
-    name: mockito
+    name: springboot01
 management:
   endpoints:
     web:
