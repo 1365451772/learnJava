@@ -1,5 +1,6 @@
 package me.sunpeng.Interceptor;
 
+import com.alibaba.fastjson.JSON;
 import lombok.extern.slf4j.Slf4j;
 import me.sunpeng.utils.StringUtils;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,7 @@ public class HttpInterceptor extends HandlerInterceptorAdapter {
         startTime.set(System.currentTimeMillis());
         String uri = request.getRequestURI();
         Map paramMap = request.getParameterMap();
-        log.info("用户访问地址:{},来路地址:{},请求参数:{}",uri, StringUtils.getIp(request));
+        log.info("用户访问地址:{},来路地址:{},请求参数:{}",uri, StringUtils.getIp(request),JSON.toJSON(paramMap));
         log.info("----------请求头.start......");
         final Enumeration<String> headerNames = request.getHeaderNames();
         while (headerNames.hasMoreElements()){

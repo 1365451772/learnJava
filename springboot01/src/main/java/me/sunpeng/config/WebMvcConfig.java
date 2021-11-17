@@ -1,9 +1,12 @@
 package me.sunpeng.config;
 
+import me.sunpeng.Interceptor.HttpInterceptor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.filter.ServletContextRequestLoggingFilter;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurationSupport;
 
@@ -15,6 +18,9 @@ import java.util.Collections;
  */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurationSupport {
+
+    @Autowired
+    private HttpInterceptor httpInterceptor;
     @Bean
     public FilterRegistrationBean loggingFilterRegistration() {
         FilterRegistrationBean<ServletContextRequestLoggingFilter> registration = new FilterRegistrationBean<>();
@@ -22,8 +28,14 @@ public class WebMvcConfig extends WebMvcConfigurationSupport {
         filter.setIncludePayload(true);
         filter.setMaxPayloadLength(9999);
         registration.setFilter(filter);
-        registration.setUrlPatterns(Collections.singleton("/notifications/*"));
+        registration.setUrlPatterns(Collections.singleton("/api/shopify/*"));
         return registration;
+    }
+
+    @Override
+    protected void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(httpInterceptor).addPathPatterns("/api/*");
+        super.addInterceptors(registry);
     }
 
     /**

@@ -2,7 +2,11 @@ package me.sunpeng.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.concurrent.*;
@@ -14,6 +18,7 @@ import java.util.concurrent.*;
 
 @RestController
 @Api(tags = "hello 欢迎界面")
+@RequestMapping("/api")
 public class HelloController {
 
     @GetMapping("/test")
@@ -44,4 +49,11 @@ public class HelloController {
         return "hello";
 
     }
+
+    @GetMapping("/testGetParams")
+    @ApiOperation(value = "测试get请求参数", notes = "测试a")
+    public ResponseEntity testGetParams(@RequestParam(name = "name")String name){
+        return new ResponseEntity(name, HttpStatus.OK);
+    }
+
 }

@@ -2,12 +2,11 @@ package me.sunpeng.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author sp
@@ -18,11 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 @Api(tags = "shopify 数据")
 public class ShopifyController {
 
-    @PostMapping("/getCreateOrderJsonByWebHook")
+    @PostMapping(value = "/getCreateOrderJsonByWebHook",
+    consumes = MediaType.APPLICATION_JSON_VALUE,
+    produces = {"application/json;charset=UTF-8"})
     @ApiOperation(value = "shopify创建订单后通过webhook推送的订单数据", notes = "shopify创建订单后通过webhook推送的订单数据")
-    public ResponseEntity getCreateOrderJsonByWebHook(HttpServletRequest request){
-       return null;
-
+    public String getCreateOrderJsonByWebHook(@RequestBody String content){
+       return content;
     }
 
 

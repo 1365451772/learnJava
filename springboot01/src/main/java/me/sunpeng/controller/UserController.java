@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * @date 2021-11-01 20:20
  */
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/api/user")
 @Api(tags = "用户信息管理")
 public class UserController {
 
